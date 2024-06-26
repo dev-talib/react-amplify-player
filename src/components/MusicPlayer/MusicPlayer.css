@@ -1,0 +1,106 @@
+/* MusicPlayer.css */
+
+.music-player {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 800px; /* Set a max-width for the player */
+  margin: auto;
+  padding: 20px;
+  background-color: #fff; /* Change this to match the background color of your app */
+  margin-top: 10vh;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow for depth */
+}
+
+.track-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.album-art {
+  margin: 0 auto 20px;
+  width: 300px; /* Adjusted album art size */
+  height: 300px; /* Adjusted album art size */
+  border-radius: 50%; /* Makes the image round */
+  overflow: hidden; /* Ensures the image doesn't overflow the border radius */
+}
+
+.album-art img {
+  width: 100%;
+  height: 100%;
+  display: block; /* Removes any extra space below the image */
+}
+
+.playback-controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 2em; /* Adjust the size of the control icons */
+  color: #333; /* Control icon color */
+}
+
+.play-btn, .skip-back, .skip-forward {
+  margin: 0 15px;
+  cursor: pointer;
+}
+
+.time-control {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.time-control p {
+  margin: 0 10px;
+}
+
+.time-control input[type="range"] {
+  width: 100%;
+  cursor: pointer;
+  -webkit-appearance: none; /* Removes default styling for WebKit browsers */
+  appearance: none; /* Removes default styling */
+  background: #ddd; /* Background of the track */
+  height: 5px; /* Height of the track */
+}
+
+.time-control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 15px; /* Width of the thumb */
+  height: 15px; /* Height of the thumb */
+  background: #4CAF50; /* Thumb background color */
+  cursor: pointer;
+  border-radius: 50%; /* Makes the thumb circular */
+}
+
+.time-control input[type="range"]::-moz-range-thumb {
+  width: 15px; /* Width of the thumb */
+  height: 15px; /* Height of the thumb */
+  background: #4CAF50; /* Thumb background color */
+  cursor: pointer;
+  border-radius: 50%; /* Makes the thumb circular */
+}
+
+h2, h3 {
+  margin: 5px 0;
+}
+
+@media (max-width: 768px) {
+  .music-player {
+    width: 90%;
+  }
+  
+  .album-art {
+    width: 200px; /* Smaller album art size for smaller screens */
+    height: 200px;
+  }
+  
+  .playback-controls {
+    font-size: 1.5em; /* Smaller control icons for smaller screens */
+  }
+}

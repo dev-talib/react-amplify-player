@@ -1,0 +1,29 @@
+.feature img{
+    height: 90vh;
+}
+
+.play-icon {
+    color: white; /* Set the color of the play icon */
+    cursor: pointer;
+    transition: transform 0.2s; /* Smooth transform on hover */
+  }
+  
+  .play-icon:hover {
+    transform: scale(1.1); /* Slightly increase icon size on hover */
+  }
+  
+  .card-img-overlay {
+    background-color: rgba(0, 0, 0, 0.4); /* Dark overlay for better text visibility */
+    /* You can remove the background-color if you want the image to be fully visible */
+  }
+  
+  .row, .col {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  /* Add custom styles for cards to remove any default Bootstrap margins and borders */
+  .card {
+    margin: 0 !important;
+    border: none !important;
+  }

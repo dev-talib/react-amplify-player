@@ -1,0 +1,42 @@
+.player-footer {
+  background-color: #343a40; /* Bootstrap's dark theme color */
+  color: white;
+  padding: 1rem 0;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 1030; /* Above most elements */
+}
+
+.player-cover img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%; /* Circular image */
+}
+
+.player-info h5,
+.player-info p {
+  margin: 0;
+}
+
+.player-audio {
+  width: 100%; /* Full width */
+  margin-top: 0.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 576px) {
+  .player-info {
+    display: none; /* Hide info on small screens */
+  }
+
+  .player-cover img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .player-audio {
+    margin-top: 0;
+  }
+}

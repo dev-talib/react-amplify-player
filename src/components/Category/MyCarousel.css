@@ -1,0 +1,71 @@
+/* MyCarousel.css */
+.my-carousel{
+    margin-top: 2vh;
+}
+/* 
+.my-carousel .carousel-card {
+    margin: auto; 
+    width: 80%; 
+  }
+  
+  .my-carousel .carousel-card .card-img-top {
+    height: 160px; 
+    object-fit: cover; 
+  }
+   */
+/* 
+  .carousel-card {
+    position: relative;
+    overflow: hidden; 
+    margin: 20px;
+  }
+  
+  .carousel-card .card-img-top {
+    width: 100%;
+    height: auto;
+   
+  }
+  
+  .card-overlay {
+    position: absolute;
+    bottom: 0; 
+    left: 0;
+    right: 0;
+    color: #fff; 
+    padding: 10px; 
+    z-index: 1;
+  } */
+
+  /* MyCarousel.css */
+
+.carousel-card {
+  position: relative;
+  overflow: hidden; /* Ensure that the content does not spill outside the card */
+}
+
+.carousel-card .card-img-top {
+  width: 100%;
+  height: auto; /* Adjust height as needed */
+}
+
+.card-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent overlay; adjust color as needed */
+  color: #fff; /* Text color */
+  padding: 15px; /* Adjust padding as needed */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-overlay > div {
+  text-align: center;
+}
+
+.card-title, .card-text {
+  margin: 0; /* Remove margin for tighter spacing */
+}
