@@ -1,0 +1,129 @@
+/* Navbar Styles */
+.navbar {
+  padding: 15px;
+}
+
+.navContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.brandLogo {
+  height: 40px;
+}
+
+.profilePicture {
+  height: 40px;
+  margin-right: 20px;
+  transition: transform 0.3s ease;
+}
+
+.profilePicture:hover {
+  transform: scale(1.1); /* Slight zoom effect on hover */
+}
+
+.navbarList {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.navbarItem {
+  font-size: 18px;
+  font-weight: bolder;  
+  color: #333;
+  margin-right: 25px;
+  text-decoration: none;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbarItem:hover {
+  color: #007bff; /* Change text color to blue on hover */
+  transform: translateY(-2px); /* Subtle upward movement on hover */
+}
+
+.customNavbarToggle {
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 20px;
+}
+
+.navbarRight {
+  display: flex;
+  align-items: center;
+}
+
+.navbarRight .btn {
+  margin-left: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bolder;
+  border-radius: 25px;
+  transition: all 0.3s ease;
+}
+
+.navbarRight .btn:hover {
+  background-color: #0056b3;
+  transform: translateY(-2px); /* Subtle hover effect */
+}
+
+/* Search Bar Styles */
+.navbarCenter {
+  flex-grow: 1; /* Allow the center area to take up remaining space */
+  display: flex;
+  justify-content: center;
+}
+
+.searchBar {
+  width: 250px;
+  margin-right: 20px;
+  transition: width 0.3s ease;
+}
+
+.searchBar:focus {
+  width: 300px;
+}
+
+/* Suggestions List */
+.suggestionsList {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  width: 250px;
+  max-height: 200px;
+  overflow-y: auto;
+  background-color: white;
+  border: 1px solid #ddd;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 10;
+}
+
+.suggestionItem {
+  cursor: pointer;
+  padding: 10px;
+  font-size: 16px;
+}
+
+.suggestionItem:hover {
+  background-color: #f1f1f1;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .profilePicture {
+    height: 45px;
+    width: 45px;
+  }
+
+  .navbarCenter {
+    display: none; /* Hide the search bar on mobile */
+  }
+
+  .navbarRight .btn {
+    font-size: 14px; /* Adjust button size for mobile */
+    padding: 8px 16px;
+  }
+}

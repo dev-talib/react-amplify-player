@@ -1,23 +1,21 @@
 import React, { useState, useRef, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { BsPlayCircle, BsPauseCircle, BsSkipStartFill, BsSkipEndFill } from 'react-icons/bs';
 import './MusicPlayer.css'; 
+import { setPlayingSong } from '../../redux/actions/playerActions';
 
 const MusicPlayer = () => {
-  const currentSong = {
-    name: "Lunar Cycles",
-    artist: "Sleepy Fish",
-    cover: "https://chimerical-puffpuff-68664f.netlify.app/images/b3.jpg", 
-    audioSrc: "https://mp3.chillhop.com/serve.php/?mp3=13014" 
-  };
-
+  const dispatch = useDispatch();
+  const currentSong = useSelector((state) => state.player.currentSong);
+  const playingSong = useSelector((state) => state.player.playingSong);
   const [isPlaying, setIsPlaying] = useState(false);
-  const audioRef = useRef(new Audio(currentSong.audioSrc));
+  const audioRef = useRef(new Audio(currentSong?.audioUrl || ''));
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
 
   useEffect(() => {
-    // Load the metadata right away
     const audio = audioRef.current;
+
     const setAudioData = () => {
       setDuration(audio.duration);
       setCurrentTime(audio.currentTime);
@@ -31,14 +29,26 @@ const MusicPlayer = () => {
     return () => {
       audio.removeEventListener('loadeddata', setAudioData);
       audio.removeEventListener('timeupdate', setAudioTime);
+      if (playingSong && playingSong.id !== currentSong.id) {
+        audio.pause();
+        setIsPlaying(false);
+      }
     };
-  }, [currentSong.audioSrc]);
+  }, [currentSong?.audioUrl]);
+
+  useEffect(() => {
+    if (playingSong && playingSong.id !== currentSong.id) {
+      audioRef.current.pause();
+      setIsPlaying(false);
+    }
+  }, [playingSong, currentSong.id]);
 
   const playSongHandler = () => {
     if (isPlaying) {
       audioRef.current.pause();
     } else {
       audioRef.current.play();
+      dispatch(setPlayingSong(currentSong));
     }
     setIsPlaying(!isPlaying);
   };
@@ -67,7 +77,7 @@ const MusicPlayer = () => {
     <div className="music-player">
       <div className="track-info">
         <div className="album-art">
-          <img src={currentSong.cover} alt={`Cover for ${currentSong.name}`} />
+          <img src={currentSong.imageUrl} alt={`Cover for ${currentSong.name}`} />
         </div>
         <h2>{currentSong.name}</h2>
         <h3>{currentSong.artist}</h3>

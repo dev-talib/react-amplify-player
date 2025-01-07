@@ -21,7 +21,7 @@ const ChartsPage = () => {
 
   return (
     <div>
-      <NavBar />  
+      <NavBar />
       <SongList songs={songs} style={{ marginTop: '2rem' }}/>
     </div>
   );

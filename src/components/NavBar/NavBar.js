@@ -1,68 +1,120 @@
-import React, {useState} from 'react';
-import { Link } from 'react-router-dom'; // Import Link
-// import { Container, Navbar, Nav, Offcanvas, Image } from 'react-bootstrap';
-import { Container, Navbar, Nav, Offcanvas, Image, Dropdown } from 'react-bootstrap';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; 
+import { Container, Navbar, Nav, Offcanvas, Image, Dropdown, Button, Form, ListGroup } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
 import ProfileDropdown from '../ProfileDropdown/ProfileDropdown';
-import logo from "../../assets/images/logo.png"
-import './NavBar.css';
+// import LoginModal from '../LoginModal/LoginModal'; 
+import styles from './NavBar.module.css';
+
+// Sample players list
+const players = [];
 
 function NavBar() {
-  const isAuthenticated = useSelector(state => state.auth.isAuthenticated); // Get the authentication status
+  const isAuthenticated = useSelector(state => state.auth.isAuthenticated);
+  const [showDropdown, setShowDropdown] = useState(false); 
+  const [showLoginModal, setShowLoginModal] = useState(false); 
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredPlayers, setFilteredPlayers] = useState([]);
 
-  const [showDropdown, setShowDropdown] = useState(false); // State for showing/hiding the dropdown
+  const toggleDropdown = () => setShowDropdown(prev => !prev);
+  const toggleLoginModal = () => setShowLoginModal(prev => !prev);
 
-  const toggleDropdown = () => {
-    setShowDropdown(!showDropdown);
+  const handleMouseEnter = () => setShowDropdown(true);
+  const handleMouseLeave = () => setShowDropdown(false);
+
+  const handleSearch = (e) => {
+    const query = e.target.value;
+    setSearchQuery(query);
+    
+    if (query) {
+      // Filter players based on search query
+      setFilteredPlayers(players.filter(player => player.toLowerCase().includes(query.toLowerCase())));
+    } else {
+      setFilteredPlayers([]);
+    }
   };
+
+  const authenticatedLinks = [
+    { to: '/dashboard', label: 'Dashboard' },
+    { to: '/player-hub', label: 'PlayerHub' },
+    { to: '/leaderboard', label: 'LeaderBoard' },
+  ];
+
+  const unauthenticatedLinks = [
+    { to: '/about', label: 'About' },
+    { to: '/news', label: 'News' },
+    { to: '/how-to-play', label: 'How to Play' },
+  ];
+
+  const navLinks = isAuthenticated ? authenticatedLinks : unauthenticatedLinks;
 
   return (
     <>
-      <Navbar expand="lg" className="navbar shadow" >
-        <Container fluid>
-          <Navbar.Brand as={Link} to="/"><img src={logo} alt="brand-logo" className='brand-logo' />Amplify</Navbar.Brand>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-lg`} className="custom-navbar-toggle" />
-          <Navbar.Offcanvas
-            id={`offcanvasNavbar-expand-lg`}
-            aria-labelledby={`offcanvasNavbarLabel-expand-lg`}
-            placement="start"
-          >
+      <Navbar expand="lg" className={`${styles.navbar} bg-body-tertiary mb-3 shadow`} fixed="top">
+        <Container fluid className={styles.navContainer}>
+          <Navbar.Brand as={Link} to="/">
+            <img src={process.env.PUBLIC_URL + '/logo.png'} alt="brand-logo" className={styles.brandLogo} />
+          </Navbar.Brand>
+          <Navbar.Toggle aria-controls="offcanvasNavbar" className={styles.customNavbarToggle} />
+          <Navbar.Offcanvas id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" placement="start">
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title id={`offcanvasNavbarLabel-expand-lg`}>
-                <img src={logo} alt="brand-logo" className='brand-logo' />
+              <Offcanvas.Title id="offcanvasNavbarLabel">
+                <img src={process.env.PUBLIC_URL + '/mycodecafe_logo.svg'} alt="brand-logo" className={styles.brandLogo} />
               </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-              <Nav className="navbar-list mx-auto">
-                {/* Use Link components */}
-                <Nav.Link as={Link} to="/home" className='navbar-item'>Home</Nav.Link>
-                <Nav.Link as={Link} to="/about" className='navbar-item'>About</Nav.Link>
-                <Nav.Link as={Link} to="/courses" className='navbar-item'>Courses</Nav.Link>
-                <Nav.Link as={Link} to="/chart" className='navbar-item'>Chart</Nav.Link>
-                <Nav.Link as={Link} to="/contact" className='navbar-item'>Contact</Nav.Link>
+              <Nav className={styles.navbarList}>
+                {navLinks.map(({ to, label }) => (
+                  <Nav.Link as={Link} to={to} className={styles.navbarItem} key={to}>{label}</Nav.Link>
+                ))}
               </Nav>
-
-            {isAuthenticated ? (
-            <Dropdown show={showDropdown} align="end">
-              <Dropdown.Toggle
-                as={Image}
-                src="https://www.svgrepo.com/show/382101/male-avatar-boy-face-man-user.svg"
-                roundedCircle
-                onClick={toggleDropdown}
-                className="profile-picture"
-              />
-              {/* Use the ProfileDropdown component */}
-              <ProfileDropdown />
-            </Dropdown>
-          ) : (
-            <Link to="/login" className="btn has-before">
-              <span className="span">Login</span>
-            </Link>
-          )}
             </Offcanvas.Body>
           </Navbar.Offcanvas>
+
+          {isAuthenticated && (
+            <div className={styles.navbarCenter}>
+              <Form.Control
+                type="text"
+                placeholder="Search players..."
+                value={searchQuery}
+                onChange={handleSearch}
+                className={styles.searchBar}
+              />
+              {filteredPlayers.length > 0 && (
+                <ListGroup className={styles.suggestionsList}>
+                  {filteredPlayers.map((player, index) => (
+                    <ListGroup.Item key={index} className={styles.suggestionItem}>
+                      {player}
+                    </ListGroup.Item>
+                  ))}
+                </ListGroup>
+              )}
+            </div>
+          )}
+
+          <div className={styles.navbarRight}>
+            {isAuthenticated ? (
+              <>
+                <Dropdown show={showDropdown} align="end" onMouseLeave={handleMouseLeave}>
+                  <Dropdown.Toggle
+                    as={Image}
+                    src="https://www.svgrepo.com/show/382101/male-avatar-boy-face-man-user.svg"
+                    roundedCircle
+                    onMouseEnter={handleMouseEnter}
+                    onClick={toggleDropdown}
+                    className={styles.profilePicture}
+                  />
+                  <ProfileDropdown showDropdown={showDropdown} toggleDropdown={toggleDropdown} />
+                </Dropdown>
+              </>
+            ) : (
+              <Button variant="primary" onClick={toggleLoginModal} className={styles.loginButton}>Login</Button>
+            )}
+          </div>
         </Container>
       </Navbar>
+
+      {/* <LoginModal show={showLoginModal} handleClose={toggleLoginModal} /> */}
     </>
   );
 }

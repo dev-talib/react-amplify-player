@@ -46,8 +46,6 @@ function Home() {
         <NavBar/>
         <TrendingMusic/>
         <CardSlider items={carouselItems} />
-        {/* <Header/> */}
-        {/* <Trending />; */}
     </div>
   )
 }

@@ -28,7 +28,7 @@ function App() {
         <Routes>
           {/* public routes */}
           <Route exact path="/" element={<Home />} /> 
-          {/* Show the login page only if the user is not authenticated */}
+          
           <Route
             path="/login"
             element={isAuthenticated ? <Navigate to="/" /> : <Login />}

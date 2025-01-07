@@ -13,7 +13,7 @@ function Player() {
 
   return (
     <div>
-        <NavBar/>
+       <NavBar/>
        <MusicPlayer currentSong={dummySongData} />
     </div>
   )
